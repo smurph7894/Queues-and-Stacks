@@ -62,6 +62,109 @@ class SLQueue {
         return this.size;
     }
 
+    getAt(position){
+        //return node at given position or null if does not exist
+        let counter = 0;
+        let node = this. head;
+        while (node){
+            if (counter === position){
+                return node;
+            }
+            counter++;
+            node = node.next;
+        }
+        return null;
+    }
+    
+    //remove at position (starts at position zero)
+    removeAt(position){
+        //index is position at queue you are trying to remove
+        //return true if value removed, false if not
+        if (this.head === null){
+            return false;
+        }
+        if (position === 0){
+            this.head = this.head.next;
+            this.size = this.size - 1;
+            return true;
+        }
+        const previous = this.getAt(position - 1);
+        if (previous === null || previous.next === null){
+            return false;
+        }
+        previous.next = previous.next.next;
+        this.size = this.size - 1;
+        return true;
+    }
+
+    findMin(){
+        if(this.head === null){
+            return null;
+        }
+        let length = this.size -1;
+        let minValue = this.head.val;
+        let node = this.head;
+        let position = 0;
+        for (let i=0; i<=length; i++){
+            if(minValue > node.val){
+                minValue = node.val;
+                position = i;
+            }
+            else if (minValue === node.val){
+                position = i;
+            }
+            node = node.next;
+        }
+        return position;
+    }
+
+    display() {
+        // console.log(this.head, "current");
+        while (this.head !== null) {
+            console.log(this.head.data);
+            this.head = this.head.next;
+        }
+    }
+
+    // SLQueue: Interleave Queue
+    // Reorder SLQueue values to alternate first half values with second-half values, in order. 
+    // For example: (1,2,3,4,5) becomes (1,4,2,5,3). You may create one additional SLQueue if needed.
+    
+    //find midpoint
+    //first value of left the first of right section
+    // recusively
+    // find midpoint, add 2nd half 
+    reOrder(){
+        let secondHalfPosition;
+        let endPoint;
+        if(this.node === null){
+            return;
+        }
+        if (this.size % 2 === 0 ){
+            let midpoint = this.size/2;
+            return this.separateList(midpoint, this.node);
+        }
+        else if (this.size % 2 === 1){
+            endPoint = Math.floor(this.size/2);
+            return this.separateList(endPoint, this.node);
+        }
+
+
+    }
+
+    separateList(cutOff, node){
+        let tempList = new SLQueue();
+        let current = 0;
+        let currentNode = node.head;
+        while(current <= cutOff){
+            tempList.enqueue(currentNode.val);
+            node.dequeue();
+            currentNode = node.next;
+            current = current + 1;
+        }
+        let lists = [node, tempList];
+        return lists;
+    }
 }
 
 function isEqual(queue1, queue2){
@@ -90,8 +193,18 @@ function isEqual(queue1, queue2){
     return [queue1, queue2];
 }
 
-function removeMinimum(){
-    
+//if head = null return
+// iterate through queue, save first value and compare to rest, for lowest value delete node no returns
+    // if value equal save both positions, compare, delete latter
+
+//not optimal for efficeny with current
+function removeMinimum(node){
+    if(this.node=== null){
+        return;
+    }
+    let position = node.findMin();
+    node.removeAt(position);
+    return node;
 }
 
 queueOne = new SLQueue();
@@ -112,6 +225,15 @@ queueTwo.enqueue(4);
 queueTwo.enqueue(5);
 queueTwo.enqueue(6);
 
+queueThree = new SLQueue();
+
+queueThree.enqueue(5);
+queueThree.enqueue(3);
+queueThree.enqueue(6);
+queueThree.enqueue(7);
+queueThree.enqueue(11);
+queueThree.enqueue(2);
+
 
 // console.log(queueOne);
 // console.log("front", queueOne.front());
@@ -122,6 +244,8 @@ queueTwo.enqueue(6);
 // console.log(queueOne.dequeue());
 // console.log(queueOne.contains(11));
 // console.log(queueOne.sizeOfQueue());
+// console.log(queueThree.findMin());
+// console.log(removeMinimum(queueThree));
 
 
 
