@@ -41,7 +41,7 @@ class SLQueue {
         if (this.head === this.tail){
             this.tail = null;
         }
-        this.head = this.tail.next;
+        this.head = this.head.next;
         this.size = this.size -1;
         return value.val;
     }
@@ -120,10 +120,16 @@ class SLQueue {
 
     display() {
         // console.log(this.head, "current");
-        while (this.head !== null) {
-            console.log(this.head.data);
-            this.head = this.head.next;
+        let node = this.head;
+        let queue = "";
+        while (node !== null) {
+            queue = queue + node.val;
+            if(node.next != null){
+                queue = queue + ", ";
+            }
+            node= node.next;
         }
+        console.log(queue);
     }
 
     // SLQueue: Interleave Queue
@@ -135,34 +141,63 @@ class SLQueue {
     // recusively
     // find midpoint, add 2nd half 
     reOrder(){
-        let secondHalfPosition;
-        let endPoint;
-        if(this.node === null){
+        let midpoint;
+        let listsArray;
+        let node = this.head;
+
+        if(node === null){
             return;
         }
         if (this.size % 2 === 0 ){
-            let midpoint = this.size/2;
-            return this.separateList(midpoint, this.node);
+            midpoint = this.size/2;
+            console.log("midpoint equal", midpoint);
+            listsArray = this.separateList(midpoint, node);
         }
         else if (this.size % 2 === 1){
-            endPoint = Math.floor(this.size/2);
-            return this.separateList(endPoint, this.node);
+            midpoint = Math.floor(this.size/2);
+            console.log("midpoint odd", midpoint);
+            listsArray = this.separateList(midpoint, node);
         }
 
+        let queue1 = listsArray[0];
+        let queue2 =listsArray[1];
+        let largerNodes = queue1.head;
+        let smallerNodes = queue2.head;
+        console.log("larger", largerNodes);
+        console.log("smaller", smallerNodes);
+        queue1.display();
+        queue2.display();
+        for(let i=0; i<=midpoint -1; i++){
+            
+            
+            //save tempval  dequeue off temp and then enque onto og
+            //deque off og then enque onto og 
+            //repeat
+        }
 
+        return queue2;
     }
 
     separateList(cutOff, node){
+        console.log("cutoff", cutOff);
         let tempList = new SLQueue();
         let current = 0;
-        let currentNode = node.head;
-        while(current <= cutOff){
+        console.log("current", current);
+        let currentNode=node;
+        // let node = queue.head;
+        console.log("node", node);
+        while(current < cutOff){
             tempList.enqueue(currentNode.val);
-            node.dequeue();
-            currentNode = node.next;
+            this.dequeue();
+            console.log("node while loop", currentNode);
+            currentNode = currentNode.next;
             current = current + 1;
         }
-        let lists = [node, tempList];
+        console.log("tempList");
+        tempList.display();
+        console.log("queue");
+        this.display();
+        let lists = [this, tempList];
         return lists;
     }
 }
@@ -241,12 +276,27 @@ queueThree.enqueue(2);
 // console.log("queue two", queueTwo);
 // isEqual(queueOne, queueTwo);
 // console.log(isEqual(queueOne, queueTwo));
+// console.log("dequeues");
+// queueOne.display();
 // console.log(queueOne.dequeue());
+// console.log("one");
+// queueOne.display();
+// console.log(queueOne.dequeue());
+// console.log("two");
+// queueOne.display();
+// console.log(queueOne.dequeue());
+// console.log("three");
+// queueOne.display();
+// console.log(queueOne.dequeue());
+// console.log("final");
+// queueOne.display();
 // console.log(queueOne.contains(11));
 // console.log(queueOne.sizeOfQueue());
 // console.log(queueThree.findMin());
 // console.log(removeMinimum(queueThree));
-
+// queueTwo.separateList(3, queueTwo);
+queueTwo.reOrder();
+queueTwo.display();
 
 
 // Queues Basic
