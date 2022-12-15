@@ -140,6 +140,9 @@ class SLQueue {
     //first value of left the first of right section
     // recusively
     // find midpoint, add 2nd half 
+    //save tempval  dequeue off temp and then enque onto og
+    //deque off og then enque onto og 
+    //repeat
     reOrder(){
         let midpoint;
         let listsArray;
@@ -158,35 +161,28 @@ class SLQueue {
             // console.log("midpoint odd", midpoint);
             listsArray = this.separateList(midpoint, node);
         }
-
         let originQueue = listsArray[0];
         let tempQueue =listsArray[1];
-        let largerNodes = originQueue.head;
-        let smallerNodes = tempQueue.head;
-        // console.log("larger", largerNodes);
-        // console.log("smaller", smallerNodes);
+        let originNode = originQueue.head;
+        let tempNode = tempQueue.head;
         originQueue.display();
         tempQueue.display();
         for(let i=0; i<=midpoint -1; i++){
-            let tempVal = smallerNodes.val;
+            let tempVal = tempNode.val;
             console.log("tempVal", tempVal);
             tempQueue.dequeue();
             console.log("tempQueue");
             tempQueue.display();
             originQueue.enqueue(tempVal);
-            let valHold = largerNodes.val;
+            let valHold = originNode.val;
             if(i != midpoint-1 || this.size%2 === 0){
                 originQueue.dequeue();
                 originQueue.enqueue(valHold);
             }
             console.log("originQueue");
             originQueue.display();
-            largerNodes = largerNodes.next;
-            smallerNodes = smallerNodes.next;
-            
-            //save tempval  dequeue off temp and then enque onto og
-            //deque off og then enque onto og 
-            //repeat
+            originNode = originNode.next;
+            tempNode = tempNode.next;
         }
         return originQueue;
     }
