@@ -150,53 +150,64 @@ class SLQueue {
         }
         if (this.size % 2 === 0 ){
             midpoint = this.size/2;
-            console.log("midpoint equal", midpoint);
+            // console.log("midpoint equal", midpoint);
             listsArray = this.separateList(midpoint, node);
         }
         else if (this.size % 2 === 1){
-            midpoint = Math.floor(this.size/2);
-            console.log("midpoint odd", midpoint);
+            midpoint = Math.ceil(this.size/2);
+            // console.log("midpoint odd", midpoint);
             listsArray = this.separateList(midpoint, node);
         }
 
-        let queue1 = listsArray[0];
-        let queue2 =listsArray[1];
-        let largerNodes = queue1.head;
-        let smallerNodes = queue2.head;
-        console.log("larger", largerNodes);
-        console.log("smaller", smallerNodes);
-        queue1.display();
-        queue2.display();
+        let originQueue = listsArray[0];
+        let tempQueue =listsArray[1];
+        let largerNodes = originQueue.head;
+        let smallerNodes = tempQueue.head;
+        // console.log("larger", largerNodes);
+        // console.log("smaller", smallerNodes);
+        originQueue.display();
+        tempQueue.display();
         for(let i=0; i<=midpoint -1; i++){
-            
+            let tempVal = smallerNodes.val;
+            console.log("tempVal", tempVal);
+            tempQueue.dequeue();
+            console.log("tempQueue");
+            tempQueue.display();
+            originQueue.enqueue(tempVal);
+            let valHold = largerNodes.val;
+            if(i != midpoint-1 || this.size%2 === 0){
+                originQueue.dequeue();
+                originQueue.enqueue(valHold);
+            }
+            console.log("originQueue");
+            originQueue.display();
+            largerNodes = largerNodes.next;
+            smallerNodes = smallerNodes.next;
             
             //save tempval  dequeue off temp and then enque onto og
             //deque off og then enque onto og 
             //repeat
         }
-
-        return queue2;
+        return originQueue;
     }
 
     separateList(cutOff, node){
-        console.log("cutoff", cutOff);
+        // console.log("cutoff", cutOff);
         let tempList = new SLQueue();
         let current = 0;
-        console.log("current", current);
+        // console.log("current", current);
         let currentNode=node;
-        // let node = queue.head;
-        console.log("node", node);
         while(current < cutOff){
             tempList.enqueue(currentNode.val);
             this.dequeue();
-            console.log("node while loop", currentNode);
+            // console.log("node while loop", currentNode);
             currentNode = currentNode.next;
             current = current + 1;
         }
-        console.log("tempList");
-        tempList.display();
-        console.log("queue");
-        this.display();
+        // console.log("tempList");
+        // tempList.display();
+        // console.log("queue");
+        // this.display();
         let lists = [this, tempList];
         return lists;
     }
@@ -262,12 +273,12 @@ queueTwo.enqueue(6);
 
 queueThree = new SLQueue();
 
-queueThree.enqueue(5);
-queueThree.enqueue(3);
-queueThree.enqueue(6);
-queueThree.enqueue(7);
-queueThree.enqueue(11);
+queueThree.enqueue(1);
 queueThree.enqueue(2);
+queueThree.enqueue(3);
+queueThree.enqueue(4);
+queueThree.enqueue(5);
+
 
 
 // console.log(queueOne);
@@ -295,8 +306,15 @@ queueThree.enqueue(2);
 // console.log(queueThree.findMin());
 // console.log(removeMinimum(queueThree));
 // queueTwo.separateList(3, queueTwo);
+console.log("queueTwo");
+queueTwo.display();
 queueTwo.reOrder();
 queueTwo.display();
+console.log("*****");
+console.log("queueThree");
+queueThree.display();
+queueThree.reOrder();
+queueThree.display();
 
 
 // Queues Basic
