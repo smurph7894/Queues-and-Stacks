@@ -249,7 +249,7 @@ function removeMinimum(node){
     return node;
 }
 
-queueOne = new SLQueue();
+const queueOne = new SLQueue();
 
 queueOne.enqueue(1);
 queueOne.enqueue(2);
@@ -258,7 +258,7 @@ queueOne.enqueue(4);
 queueOne.enqueue(5);
 queueOne.enqueue(6);
 
-queueTwo = new SLQueue();
+const queueTwo = new SLQueue();
 
 queueTwo.enqueue(1);
 queueTwo.enqueue(2);
@@ -267,14 +267,13 @@ queueTwo.enqueue(4);
 queueTwo.enqueue(5);
 queueTwo.enqueue(6);
 
-queueThree = new SLQueue();
+const queueThree = new SLQueue();
 
 queueThree.enqueue(1);
 queueThree.enqueue(2);
 queueThree.enqueue(3);
 queueThree.enqueue(4);
 queueThree.enqueue(5);
-
 
 
 // console.log(queueOne);
